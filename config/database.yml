@@ -1,0 +1,20 @@
+
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  username: ubuntu
+  pool: 5
+
+development:
+  <<: *default
+  database: belt_review_development
+
+test:
+  <<: *default
+  database: belt_review_test
+
+
+production:
+  <<: *default
+  database: belt_review_production
+  password: <%= ENV['BELT_REVIEW_DATABASE_PASSWORD'] %>

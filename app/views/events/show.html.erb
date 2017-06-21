@@ -1,0 +1,104 @@
+<style type="text/css">
+	.discussions{
+		display: inline-block;
+		border: solid black 1px;
+		min-height: 300px;
+		width: 350px;
+		overflow: auto;
+		margin-left: 50px;
+		padding: 5px;
+	}
+	.join_table{
+		display: inline-block;
+		min-height: 100px;
+		width: 500px;
+		border: solid black 1px;
+		padding: 20px;
+		padding-top: 0px;
+		vertical-align: top;
+	}
+	.float-right{
+		display: inline-block;
+
+	}
+	.edit_event{
+		min-height: 200px;
+		width: 300px;
+		border: solid black 1px;
+	}
+	label{
+		display: block;
+	}
+	</style>
+<div class="container">
+	<div class="head">
+		<h1><%= @event.name %></h1>
+		<h3>Host: <%= @event.user.first_name %> <%= @event.user.last_name %></h3>
+		<h3>Date: <%= @event.date.strftime("%m/%d/%Y") %></h3>
+		<h3>Location: <%= @event.location %>, <%= @event.state %></h3>
+	</div>
+	<hr>
+	<h3>Number of People who are joining the event: </h3>
+	<div class="join_table">
+		<table class="table table-hover">
+			<tr>
+				<th>Name</th>
+				<th>Location</th>
+				<th>State</th>
+			</tr>
+			<% @event.posts.each do |post| %>
+			<tr>
+				<td><%= post.user.first_name %></td>
+				<td><%= post.user.location %></td>
+				<td><%= post.user.state %></td>
+			</tr>
+			<% end %>
+		</table>
+	</div>
+	<div class="float-right">
+		<h4 style="text-align: right; margin-right: 20px;">Discussions about this event:</h4>
+		<div class="discussions">
+			<% @event.discussions.each do |dis| %>
+				<p><u><%= dis.user.first_name %> says</u>: <%= dis.content %></p>
+				<hr>
+			<%end%>
+		</div>
+		<h3 style="text-align: right; margin-right: 20px;">Add Comment:</h3>
+		<form style="text-align: right; margin-right: 20px;" action="/discussions" method="POST">
+			<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+			<input type="hidden" name="discussion[event_id]" value="<%= @event.id %>">
+			<textarea cols="35" rows="3" name="discussion[content]"></textarea>
+			<br>
+			<input type="submit" value="Submit Comment">
+		</form>
+	</div>
+	
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
